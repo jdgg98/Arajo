@@ -12,12 +12,17 @@ bc_r = [] # Secuencia de bits recibidos
 bf_r = [] # Secuencia de bits de informacion recibidos
 bf_r_aux = [] # Array auxiliar para bf
 bc_r_aux = [] # Array auxiliar para bc
-hits = 0
-misses = 0
+hits = 0 # Cantidad de bits transmitidos correctamente
+misses = 0 # Cantidad de bits transmitidos con error
 
-#file = open("bft_short.txt")
-#bft = file.read()
-#file.close()
+''' En la etapa de decodificacion se guardaran en el array bkR
+los paquetes de 24 bits que componen la salida del codificador '''
+bkR=[] 
+
+''' En el array vR se guardaran los pixeles decodificados
+en la etapa de decodificación'''
+vR=[]
+
 # Guarda en input_img el nombre de la imagen (con extensión), que se le pasa como parametro al programa
 input_img = sys.argv[1]
 
@@ -33,6 +38,7 @@ Cada pixel codificado sera un array de tamaño 3, que contiene los valores
 codificados de cada canal """
 bkt = []
 
+################################## Codificador de fuente ########################################
 
 """ Con este ciclo for se codifica cada pixel en la lista v_k y se agrega
 al array de pixeles codificados bkt """
@@ -58,6 +64,8 @@ for i in range (bkt_len):
 del codificador """
 bft = "".join(bkt)
 
+################################### Codificador de canal #####################################
+
 # Recorre la cadena de bits original y la separa en paquetes de 4 bits
 for i in range(0,len(bft),4):
    bf.append(bft[i:i+4]) 
@@ -79,20 +87,18 @@ for i in range(len(bc_r)):
 bc_r = "".join(bc_r_aux)
 bf = "".join(bf)
 
+################################## Canal Binario Simetrico #####################################
+
 bc_r = pf.canal_bs(bc_r)
 
-print("bc_r len: "+str(len(bc_r)))
-print("bf len: "+str(len(bf)))
+################################## Decodificador de canal ######################################
 
 for i in range(0,len(bc_r),7):
     array_aux =[]
     for j in range(0,7):
         array_aux.append(int(bc_r[i+j]))
     
-    # print(array_aux)
     bf_r.append(hamming.decode(array_aux))
-
-#print(bf_r)
 
 array_aux =""
 for i in range(0,len(bf_r)):
@@ -107,16 +113,13 @@ for i in range(0,len(bf)):
     elif bf[i] == bf_r[i]:
         hits+=1
 
-print("Cantidad de aciertos: "+str(hits))
+ber = misses/(misses+hits)
+
+print("Etapa de Decodificador de Canal\nCantidad de aciertos: "+str(hits))
 print("Cantidad de errores: "+str(misses))
+print("Bit Error Rate (BER): {:0.4f}".format(ber)+"\n")
 
-''' En la etapa de decodificacion se guardaran en el array bkR
-los paquetes de 24 bits que componen la salida del codificador '''
-bkR=[] 
-
-''' En el array vR se guardaran los pixeles decodificados
-en la etapa de decodificación'''
-vR=[]
+################################## Decodificador de fuente ######################################
 
 # Recorre la cadena de bits unidos y la separa en paquetes de 24 bits
 for i in range(0,len(bf_r), 24): 

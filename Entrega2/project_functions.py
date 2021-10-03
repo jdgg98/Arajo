@@ -111,45 +111,10 @@ def canal_bs(binary_chain):
 		elif bf_r[i] == binary_chain[i]:
 			hits+=1
 
-	print("Cantidad de aciertos: "+str(hits))
+	ber = misses/(misses+hits)
+
+	print("Etapa de Canal Binario Simétrico \nCantidad de aciertos: "+str(hits))
 	print("Cantidad de errores: "+str(misses))
+	print("Bit Error Rate (BER): {:0.4f}".format(ber)+"\n")
 
 	return bf_r
-
-"""
-def canal_bs(binary_chain):
-	hits = 0
-	misses = 0
-	bf_r = ""
-
-	for i in range(0,len(binary_chain),4):
-		P_err = random.randrange(0,100)
-		err_bit = random.randrange(0,4)
-		aux_chain = []
-
-		for j in range(4):
-			aux_chain.append(binary_chain[i+j])
-
-		#print("Cadena original: "+binary_chain[i:i+7])
-
-		if(P_err <= 40):
-			#print("Ocurrió cambio")
-			if(aux_chain[err_bit] == "1"):
-				aux_chain[err_bit] = "0"
-			elif(aux_chain[err_bit] == "0"):
-				aux_chain[err_bit] = "1"
-
-		aux_chain = "".join(aux_chain)
-		#print("Cadena nueva: "+aux_chain)
-		bf_r = bf_r+aux_chain
-
-	for i in range(0,len(bf_r)):
-		if bf_r[i] != binary_chain[i]:
-			misses+=1
-		elif bf_r[i] == binary_chain[i]:
-			hits+=1
-
-	print("Cantidad de aciertos: "+str(hits))
-	print("Cantidad de errores: "+str(misses))
-
-	return bf_r"""
