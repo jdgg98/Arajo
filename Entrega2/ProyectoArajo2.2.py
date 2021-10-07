@@ -93,6 +93,7 @@ bc_r = pf.canal_bs(bc_r)
 
 ################################## Decodificador de canal ######################################
 
+# Recorre la cadena de bits bc_r y la separa en paquetes de 7 bits y se pasa por la matriz de verificación.
 for i in range(0,len(bc_r),7):
     array_aux =[]
     for j in range(0,7):
@@ -100,6 +101,7 @@ for i in range(0,len(bc_r),7):
     
     bf_r.append(hamming.decode(array_aux))
 
+#Se concatena los bits que están en la lista bf_r
 array_aux =""
 for i in range(0,len(bf_r)):
     for j in range(0,4):
@@ -107,6 +109,7 @@ for i in range(0,len(bf_r)):
 
 bf_r = array_aux
 
+#Se calculan la cantidad de aciertos, errores y el BER del decodificador
 for i in range(0,len(bf)):
     if bf[i] != bf_r[i]:
         misses+=1
