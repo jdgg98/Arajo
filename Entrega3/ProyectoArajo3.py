@@ -97,21 +97,14 @@ p=pam.constellation
 
 print("Los valores de la constelación son:", p)
 
-#for i in range(0,4):
-    #print(xT[i])
-
+################################ Medio de transmisión ruidoso ##################################
 #Se añade ruido blanco o Gaussiano a la señal modulada
 
 xR=GaussianNoise(xT)
 
-
-#for i in range(0,4):
-    #print(xR[i])
 ############################### Demodulador digital banda-base #################################
 
-#bc_r_aux = pam.demodulate(xR,decision_method='hard')
-#for i in range(0,4):
- #   print(bc_r_aux[i])
+bc_r_aux = pam.demodulate(xR,decision_method='hard')
 
 bc_r = ""
 
