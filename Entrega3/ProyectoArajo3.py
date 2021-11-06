@@ -115,11 +115,13 @@ bc_r_aux=pam.demodulate(xR,decision_method='hard')
 for i in range(0,4):
     print(bc_r_aux[i])
 
+aux = ""
 
+for i in range(len(bc_r_aux)):
+    aux = aux+str(bc_r_aux[i])
 
+bc_r = aux
 
-
-''''
 ################################## Decodificador de canal ######################################
 
 # Recorre la cadena de bits bc_r y la separa en paquetes de 7 bits y se pasa por la matriz de verificación.
@@ -164,4 +166,4 @@ for i in range(0, len(bkR)):
 # Convierte el mapa de pixeles recuperados en una imagen bmp y la guarda
 newImg = Image.new(img.mode, img.size)
 newImg.putdata(vR)
-newImg.save('resultado_simetrico.bmp')'''
+newImg.save('resultado_simetrico.bmp')
