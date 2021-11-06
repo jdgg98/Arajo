@@ -92,7 +92,34 @@ bf = "".join(bf)
 
 xT = pam.modulate(bc_r)
 
-'''
+p=pam.constellation
+
+#print(p)
+
+#for i in range(0,4):
+    #print(xT[i])
+
+#Se añade ruido blanco o Gaussiano a la señal modulada
+GaussianNoise=komm.AWGNChannel(snr=50, signal_power=2.0)
+xR=GaussianNoise(xT)
+
+
+#for i in range(0,4):
+    #print(xR[i])
+
+
+
+##################################Demodulador##################################################
+
+bc_r_aux=pam.demodulate(xR,decision_method='hard')
+for i in range(0,4):
+    print(bc_r_aux[i])
+
+
+
+
+
+''''
 ################################## Decodificador de canal ######################################
 
 # Recorre la cadena de bits bc_r y la separa en paquetes de 7 bits y se pasa por la matriz de verificación.
