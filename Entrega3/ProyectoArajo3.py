@@ -4,7 +4,7 @@ import sys
 import project_functions as pf # Archivo de funciones creadas
 
 hamming = komm.HammingCode(3)
-pam = komm.PAModulation(4)
+pam = komm.PAModulation(4,base_amplitude=2.0)
 
 bc = [] # Copia de la secuencia de bits transmitida
 bf = [] # Secuencia de bits original
@@ -83,18 +83,16 @@ bc_r = bc # Se copia la secuencia de bits transmitidos bc en la secuencia de bit
 
 for i in range(len(bc_r)):
     for j in range(0,7):
-        bc_r_aux.append(str(bc_r[i][j]))
+        bc_r_aux.append(int(bc_r[i][j]))
 
-bc_r = "".join(bc_r_aux)
+bc_r = bc_r_aux
 bf = "".join(bf)
 
 ################################ Modulador digital banda-base ##################################
 
-print(bc_r)
+xT = pam.modulate(bc_r)
 
-
-
-
+'''
 ################################## Decodificador de canal ######################################
 
 # Recorre la cadena de bits bc_r y la separa en paquetes de 7 bits y se pasa por la matriz de verificación.
@@ -139,4 +137,4 @@ for i in range(0, len(bkR)):
 # Convierte el mapa de pixeles recuperados en una imagen bmp y la guarda
 newImg = Image.new(img.mode, img.size)
 newImg.putdata(vR)
-newImg.save('resultado_simetrico.bmp')
+newImg.save('resultado_simetrico.bmp')'''
