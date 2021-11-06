@@ -2,9 +2,9 @@ import komm
 from PIL import Image
 import sys
 import project_functions as pf # Archivo de funciones creadas
-#from numpy.core.arrayprint import printoptions
 
 hamming = komm.HammingCode(3)
+pam = komm.PAModulation(4)
 
 bc = [] # Copia de la secuencia de bits transmitida
 bf = [] # Secuencia de bits original
@@ -86,6 +86,11 @@ for i in range(len(bc_r)):
 
 bc_r = "".join(bc_r_aux)
 bf = "".join(bf)
+
+################################ Modulador digital banda-base ##################################
+
+
+
 
 ################################## Canal Binario Simetrico #####################################
 
