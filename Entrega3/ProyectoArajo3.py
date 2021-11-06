@@ -12,6 +12,7 @@ bc_r = [] # Secuencia de bits recibidos
 bf_r = [] # Secuencia de bits de informacion recibidos
 bf_r_aux = [] # Array auxiliar para bf
 bc_r_aux = [] # Array auxiliar para bc
+xT = [] # Array de señal modulada
 hits = 0 # Cantidad de bits transmitidos correctamente
 misses = 0 # Cantidad de bits transmitidos con error
 
@@ -89,12 +90,10 @@ bf = "".join(bf)
 
 ################################ Modulador digital banda-base ##################################
 
+print(bc_r)
 
 
 
-################################## Canal Binario Simetrico #####################################
-
-bc_r = pf.canal_bs(bc_r)
 
 ################################## Decodificador de canal ######################################
 
