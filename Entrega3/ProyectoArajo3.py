@@ -4,7 +4,8 @@ import sys
 import project_functions as pf # Archivo de funciones creadas
 
 hamming = komm.HammingCode(3)
-pam = komm.PAModulation(4,base_amplitude=2.0)
+pam = komm.PAModulation(4,base_amplitude=0.5)
+GaussianNoise=komm.AWGNChannel(snr=50, signal_power=5.0)
 
 bc = [] # Copia de la secuencia de bits transmitida
 bf = [] # Secuencia de bits original
@@ -94,13 +95,13 @@ xT = pam.modulate(bc_r)
 
 p=pam.constellation
 
-#print(p)
+print(p)
 
 #for i in range(0,4):
     #print(xT[i])
 
 #Se añade ruido blanco o Gaussiano a la señal modulada
-GaussianNoise=komm.AWGNChannel(snr=50, signal_power=2.0)
+
 xR=GaussianNoise(xT)
 
 
@@ -109,18 +110,16 @@ xR=GaussianNoise(xT)
 
 
 
-##################################Demodulador##################################################
+############################### Demodulador digital banda-base #################################
 
-bc_r_aux=pam.demodulate(xR,decision_method='hard')
+bc_r_aux = pam.demodulate(xR,decision_method='hard')
 for i in range(0,4):
     print(bc_r_aux[i])
 
-aux = ""
+bc_r = ""
 
 for i in range(len(bc_r_aux)):
-    aux = aux+str(bc_r_aux[i])
-
-bc_r = aux
+    bc_r = bc_r+str(bc_r_aux[i])
 
 ################################## Decodificador de canal ######################################
 
