@@ -10,10 +10,10 @@ medio del método de Hamming '''
 hamming = komm.HammingCode(3)
 
 # La clase ASKodulation simula una modulacion por amplitud de pulsos (ASK)
-ask = komm.ASKModulation(4,base_amplitude=0.5)
+ask = komm.ASKModulation(4,base_amplitude=1)
 
 # La clase AWGNChannel modela un canal de ruido gaussiano blanco aditivo (AWGN)
-GaussianNoise = komm.AWGNChannel(snr=50, signal_power=5.0)
+GaussianNoise = komm.AWGNChannel(snr=25, signal_power=1.0)
 
 bc = [] # Copia de la secuencia de bits transmitida
 bf = [] # Secuencia de bits original
