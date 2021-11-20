@@ -9,8 +9,8 @@ import project_functions as pf # Archivo de funciones creadas
 medio del método de Hamming '''
 hamming = komm.HammingCode(3)
 
-# La clase PAModulation simula una modulacion por amplitud de pulsos (PAM)
-pam = komm.PAModulation(4,base_amplitude=0.5)
+# La clase ASKodulation simula una modulacion por amplitud de pulsos (ASK)
+ask = komm.ASKModulation(4,base_amplitude=0.5)
 
 # La clase AWGNChannel modela un canal de ruido gaussiano blanco aditivo (AWGN)
 GaussianNoise = komm.AWGNChannel(snr=50, signal_power=5.0)
@@ -101,9 +101,9 @@ bf = "".join(bf)
 
 ''' Se modula la secuencia de bits, que sale del codificacdor de canal, 
 a sus correspondientes puntos de constelacion'''
-xT = pam.modulate(bc_r)
+xT = ask.modulate(bc_r)
 
-p = pam.constellation # Se guarda la constelacion de la modulacion en la variable p
+p = ask.constellation # Se guarda la constelacion de la modulacion en la variable p
 
 print("Los valores de la constelación son:", p) # Se imprime la constelación de la modulacion
 
@@ -114,7 +114,7 @@ xR = GaussianNoise(xT) # Se añade ruido blanco o Gaussiano a la señal modulada
 ############################### Demodulador digital banda-base #################################
 
 ''' Se demodula una secuencia de puntos recibidos en una secuencia de bits'''
-bc_r_aux = pam.demodulate(xR,decision_method='hard') #bc_r_aux es un array de enteros que varian entre 1 y 0 (bits)
+bc_r_aux = ask.demodulate(xR,decision_method='hard') #bc_r_aux es un array de enteros que varian entre 1 y 0 (bits)
 
 ''' Se vacia bc_r y se guardan en ella, en una sola cadena, toda la secuencia de bits demodulada.
 La diferencia con bc_r_aux es que en este caso la cadena de bits se guarda como un string'''
