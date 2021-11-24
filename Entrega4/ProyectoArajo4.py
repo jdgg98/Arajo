@@ -101,7 +101,7 @@ for i in range(len(bc_r)):
 bc_r = bc_r_aux
 bf = "".join(bf)
 
-################################ Modulador digital banda-base ##################################
+################################ Modulador digital paso-banda ##################################
 
 ''' Se modula la secuencia de bits, que sale del codificacdor de canal, 
 a sus correspondientes puntos de constelacion'''
@@ -115,35 +115,7 @@ print("Los valores de la constelación son:", p) # Se imprime la constelación d
 
 xR = GaussianNoise(xT) # Se añade ruido blanco o Gaussiano a la señal modulada
 
-prueba = [2.036898887954852, 2.0375157671303756, 1.910413252208127, 1.9320775329482969, 2.1148532047192887, 2.0220359818807916, 1.964830765655118, 2.2411193113619223, 2.156351787325047, 2.0270157797641484, 1.99651187526255, 2.1045548794488407, 1.8309695956328291, 1.6930808779146052, 2.1553076343539166]
-prueba2 = []
-prueba3 = []
-
-for i in range(1379007,1379022):
-    for j in range(0,100):
-        prueba2.append(xT[i].real)
-        prueba3.append(xR[i].real)
-
-dt = 0.01
-t = np.arange(0, 15, dt)
-
-carrier = np.cos(45*t) # modulador
-
-senal = prueba2*carrier # señal en salida del tx
-
-awgn = prueba3*carrier # señal con ruido
-
-fig, axs = plt.subplots(2, 1)
-axs[0].plot(t, senal, color='blue')
-axs[0].set_ylabel('señal modulada')
-
-axs[1].plot(t, awgn, color='red')
-axs[1].set_ylabel('señal con ruido')
-
-fig.tight_layout()
-plt.show()
-
-############################### Demodulador digital banda-base #################################
+############################### Demodulador digital paso banda #################################
 
 '''Se demodula una secuencia de puntos recibidos en una secuencia de bits'''
 bc_r_aux = ask.demodulate(xR,decision_method='hard') #bc_r_aux es un array de enteros que varian entre 1 y 0 (bits)
@@ -200,3 +172,32 @@ for i in range(0, len(bkR)):
 newImg = Image.new(img.mode, img.size)
 newImg.putdata(vR)
 newImg.save('resultado_simetrico.bmp')
+
+#Comportamiento de la señal modulada y la señal modulada con ruido:
+prueba = [2.036898887954852, 2.0375157671303756, 1.910413252208127, 1.9320775329482969, 2.1148532047192887, 2.0220359818807916, 1.964830765655118, 2.2411193113619223, 2.156351787325047, 2.0270157797641484, 1.99651187526255, 2.1045548794488407, 1.8309695956328291, 1.6930808779146052, 2.1553076343539166]
+prueba2 = []
+prueba3 = []
+
+for i in range(1379007,1379022):
+    for j in range(0,100):
+        prueba2.append(xT[i].real)
+        prueba3.append(xR[i].real)
+
+dt = 0.01
+t = np.arange(0, 15, dt)
+
+carrier = np.cos(45*t) # modulador
+
+senal = prueba2*carrier # señal en salida del tx
+
+awgn = prueba3*carrier # señal con ruido
+
+fig, axs = plt.subplots(2, 1)
+axs[0].plot(t, senal, color='blue')
+axs[0].set_ylabel('señal modulada')
+
+axs[1].plot(t, awgn, color='red')
+axs[1].set_ylabel('señal con ruido')
+
+fig.tight_layout()
+plt.show()
