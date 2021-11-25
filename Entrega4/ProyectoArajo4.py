@@ -5,7 +5,6 @@ import project_functions as pf # Archivo de funciones creadas
 from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 
 # Se realizan las instancias de las clases que se implementaran de las librerias incluidas
 
@@ -174,24 +173,26 @@ newImg.putdata(vR)
 newImg.save('resultado_simetrico.bmp')
 
 #Comportamiento de la señal modulada y la señal modulada con ruido:
-prueba = [2.036898887954852, 2.0375157671303756, 1.910413252208127, 1.9320775329482969, 2.1148532047192887, 2.0220359818807916, 1.964830765655118, 2.2411193113619223, 2.156351787325047, 2.0270157797641484, 1.99651187526255, 2.1045548794488407, 1.8309695956328291, 1.6930808779146052, 2.1553076343539166]
-prueba2 = []
-prueba3 = []
+muestras_xT = [] # Muestras de la señal de salida del modulador
+muestras_xR = [] # Muestras de la señal con ruido
 
+# Se almacenan las 15 muestras en cada array
 for i in range(1379007,1379022):
     for j in range(0,100):
-        prueba2.append(xT[i].real)
-        prueba3.append(xR[i].real)
+        muestras_xT.append(xT[i].real)
+        muestras_xR.append(xR[i].real)
 
+# Se define el tiempo de simulacion
 dt = 0.01
 t = np.arange(0, 15, dt)
 
 carrier = np.cos(45*t) # modulador
 
-senal = prueba2*carrier # señal en salida del tx
+senal = muestras_xT*carrier # señal de salida del modulador
 
-awgn = prueba3*carrier # señal con ruido
+awgn = muestras_xR*carrier # señal con ruido
 
+# Se realizan las graficas
 fig, axs = plt.subplots(2, 1)
 axs[0].plot(t, senal, color='blue')
 axs[0].set_ylabel('señal modulada')
